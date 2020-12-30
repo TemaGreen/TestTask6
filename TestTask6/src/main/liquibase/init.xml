@@ -1,0 +1,24 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="001" author="Artem">
+        <sql>
+            CREATE TABLE city(
+                name varchar(40),
+                latitude decimal(24,16),
+                longitude decimal(24,16),
+            PRIMARY KEY(name)
+            );
+
+            CREATE TABLE distance(
+                fromcity varchar(40),
+                tocity varchar(40),
+                distance decimal(16,2),
+            CONSTRAINT FK_fromcity FOREIGN KEY(fromcity)
+                REFERENCES city(name) ON DELETE CASCADE,
+            CONSTRAINT FK_tocity FOREIGN KEY(tocity)
+                REFERENCES city(name) ON DELETE CASCADE,
+            PRIMARY KEY(fromcity, tocity)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
